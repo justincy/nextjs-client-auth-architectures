@@ -1,10 +1,11 @@
 import Layout from "../components/Layout";
-import { useRouter } from "next/router";
+import withoutAuth from "../hocs/withoutAuth";
+import { useAuth } from "../providers/Auth";
 
-export default function Login() {
-  const router = useRouter();
+export default withoutAuth(function Login() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { setAuthenticated } = useAuth();
   const submitHandler = async (event) => {
     event.preventDefault();
     const response = await fetch("/api/login", {
@@ -16,7 +17,7 @@ export default function Login() {
       body: JSON.stringify({ username, password }),
     });
     if (response.status === 200) {
-      router.push("/");
+      setAuthenticated(true);
     } else {
       console.error("Login error", response);
     }
@@ -49,4 +50,4 @@ export default function Login() {
       </form>
     </Layout>
   );
-}
+});
