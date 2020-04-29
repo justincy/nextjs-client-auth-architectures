@@ -1,12 +1,26 @@
 import Layout from "../components/Layout";
+import { useRouter } from "next/router";
 
 export default function Login() {
+  const router = useRouter();
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    const response = await fetch("/api/login", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    if (response.status === 200) {
+      router.push("/");
+    } else {
+      console.error("Login error", response);
+    }
   };
-
   return (
     <Layout>
       <h1>Login</h1>

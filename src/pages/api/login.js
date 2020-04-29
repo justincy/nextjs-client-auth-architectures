@@ -1,6 +1,9 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
+// We don't actually do any validation here because
+// that's not the point of this demo.
 export default (req, res) => {
-  res.statusCode = 200
-  res.json({ name: 'John Doe' })
-}
+  res.setHeader(
+    "Set-Cookie",
+    "session=1; Max-Age=86400; SameSite=Strict; HttpOnly; Path=/"
+  );
+  res.status(200).end();
+};
