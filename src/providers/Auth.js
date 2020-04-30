@@ -7,10 +7,12 @@ const AuthContext = React.createContext({
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setAuthenticated] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(true);
   React.useEffect(() => {
     const initializeAuth = async () => {
       const response = await fetch('/api/checkAuth');
       setAuthenticated(response.status === 200);
+      setLoading(false);
     };
     initializeAuth();
   }, []);
@@ -18,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        isLoading,
         setAuthenticated
       }}
     >
