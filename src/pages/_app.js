@@ -1,7 +1,7 @@
-import React from "react";
-import App from "next/app";
-import { AuthProvider } from "../providers/Auth";
-import cookie from "cookie";
+import React from 'react';
+import App from 'next/app';
+import cookie from 'cookie';
+import { AuthProvider } from '../providers/Auth';
 
 class MyApp extends App {
   render() {
@@ -14,11 +14,11 @@ class MyApp extends App {
   }
 }
 
-MyApp.getInitialProps = async (appContext) => {
+MyApp.getInitialProps = async appContext => {
   let authenticated = false;
   const request = appContext.ctx.req;
   if (request) {
-    request.cookies = cookie.parse(request.headers.cookie || "");
+    request.cookies = cookie.parse(request.headers.cookie || '');
     authenticated = !!request.cookies.session;
   }
 

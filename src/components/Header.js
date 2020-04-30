@@ -1,10 +1,10 @@
-import { useIsAuthenticated } from "../providers/Auth";
+import { useIsAuthenticated } from '../providers/Auth';
 
 export default function Header() {
   const isAuthenticated = useIsAuthenticated();
   return (
     <header>
-      <a href="/">Home</a> |{" "}
+      <a href="/">Home</a> |{' '}
       {isAuthenticated ? (
         <a href="/logout">Logout</a>
       ) : (

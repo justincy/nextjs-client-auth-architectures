@@ -1,25 +1,25 @@
-import Layout from "../components/Layout";
-import withoutAuth from "../hocs/withoutAuth";
-import { useAuth } from "../providers/Auth";
+import Layout from '../components/Layout';
+import withoutAuth from '../hocs/withoutAuth';
+import { useAuth } from '../providers/Auth';
 
 export default withoutAuth(function Login() {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const { setAuthenticated } = useAuth();
-  const submitHandler = async (event) => {
+  const submitHandler = async event => {
     event.preventDefault();
-    const response = await fetch("/api/login", {
-      method: "POST",
-      credentials: "same-origin",
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      credentials: 'same-origin',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password })
     });
     if (response.status === 200) {
       setAuthenticated(true);
     } else {
-      console.error("Login error", response);
+      console.error('Login error', response);
     }
   };
   return (
@@ -28,21 +28,21 @@ export default withoutAuth(function Login() {
       <form onSubmit={submitHandler}>
         <div>
           <label>
-            Username{" "}
+            Username{' '}
             <input
               type="text"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={e => setUsername(e.target.value)}
             />
           </label>
         </div>
         <div>
           <label>
-            Password{" "}
+            Password{' '}
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
             />
           </label>
         </div>

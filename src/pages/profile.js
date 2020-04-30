@@ -1,5 +1,5 @@
-import Layout from "../components/Layout";
-import withAuth from "../hocs/withAuth";
+import Layout from '../components/Layout';
+import withAuth from '../hocs/withAuth';
 
 export default withAuth(function Profile() {
   return (

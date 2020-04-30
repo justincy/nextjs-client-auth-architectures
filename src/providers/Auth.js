@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 const AuthContext = React.createContext({
   isAuthenticated: false,
-  setAuthenticated: () => {},
+  setAuthenticated: () => {}
 });
 
 /**
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children, authenticated }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        setAuthenticated,
+        setAuthenticated
       }}
     >
       {children}
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children, authenticated }) => {
 export function useAuth() {
   const context = React.useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }

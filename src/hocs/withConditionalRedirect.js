@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 function isBrowser() {
-  return typeof window !== "undefined";
+  return typeof window !== 'undefined';
 }
 
 /**
@@ -28,9 +28,9 @@ export default function withConditionalRedirect({
   WrappedComponent,
   clientCondition,
   serverCondition,
-  location,
+  location
 }) {
-  const WithConditionalRedirectWrapper = (props) => {
+  const WithConditionalRedirectWrapper = props => {
     const router = useRouter();
     const redirectCondition = clientCondition();
     if (isBrowser() && redirectCondition) {
@@ -40,7 +40,7 @@ export default function withConditionalRedirect({
     return <WrappedComponent {...props} />;
   };
 
-  WithConditionalRedirectWrapper.getInitialProps = async (ctx) => {
+  WithConditionalRedirectWrapper.getInitialProps = async ctx => {
     if (!isBrowser() && ctx.res) {
       if (serverCondition(ctx)) {
         ctx.res.writeHead(302, { Location: location });
