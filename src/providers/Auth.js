@@ -5,14 +5,15 @@ const AuthContext = React.createContext({
   setAuthenticated: () => {}
 });
 
-/**
- * The initial value of `isAuthenticated` comes from the `authenticated`
- * prop which gets set by _app. We store that value in state and ignore
- * the prop from then on. The value can be changed by calling the
- * `setAuthenticated()` method in the context.
- */
-export const AuthProvider = ({ children, authenticated }) => {
-  const [isAuthenticated, setAuthenticated] = React.useState(authenticated);
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setAuthenticated] = React.useState(false);
+  React.useEffect(() => {
+    const initializeAuth = async () => {
+      const response = await fetch('/api/checkAuth');
+      setAuthenticated(response.status === 200);
+    };
+    initializeAuth();
+  }, []);
   return (
     <AuthContext.Provider
       value={{

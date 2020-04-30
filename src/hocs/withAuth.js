@@ -9,11 +9,8 @@ export default function withAuth(WrappedComponent, location = '/login') {
   return withConditionalRedirect({
     WrappedComponent,
     location,
-    clientCondition: function withAuthClientCondition() {
+    condition: function withAuthCondition() {
       return !useIsAuthenticated();
-    },
-    serverCondition: function withAuthServerCondition(ctx) {
-      return !ctx.req?.cookies.session;
     }
   });
 }

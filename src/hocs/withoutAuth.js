@@ -9,11 +9,8 @@ export default function withoutAuth(WrappedComponent, location = '/profile') {
   return withConditionalRedirect({
     WrappedComponent,
     location,
-    clientCondition: function withoutAuthClientCondition() {
+    condition: function withoutAuthCondition() {
       return useIsAuthenticated();
-    },
-    serverCondition: function withoutAuthServerCondition(ctx) {
-      return !!ctx.req?.cookies.session;
     }
   });
 }
