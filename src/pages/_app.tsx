@@ -1,10 +1,15 @@
-import React from 'react';
-import App from 'next/app';
+import React, { ReactElement } from 'react';
+import App, { AppInitialProps } from 'next/app';
 import cookie from 'cookie';
+import { CookieMessage } from '../@types';
 import { AuthProvider } from '../providers/Auth';
 
-class MyApp extends App {
-  render() {
+type AppProps = {
+  authenticated: boolean;
+};
+
+class MyApp extends App<AppProps> {
+  render(): ReactElement {
     const { Component, pageProps, authenticated } = this.props;
     return (
       <AuthProvider authenticated={authenticated}>
@@ -14,9 +19,11 @@ class MyApp extends App {
   }
 }
 
-MyApp.getInitialProps = async appContext => {
+MyApp.getInitialProps = async (
+  appContext
+): Promise<AppInitialProps & AppProps> => {
   let authenticated = false;
-  const request = appContext.ctx.req;
+  const request = appContext.ctx.req as CookieMessage;
   if (request) {
     request.cookies = cookie.parse(request.headers.cookie || '');
     authenticated = !!request.cookies.session;

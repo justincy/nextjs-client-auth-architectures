@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 
-const AuthContext = React.createContext({
+type AuthContext = {
+  isAuthenticated: boolean;
+  setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const AuthContext = React.createContext<AuthContext>({
   isAuthenticated: false,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setAuthenticated: () => {}
 });
 
@@ -11,8 +17,16 @@ const AuthContext = React.createContext({
  * the prop from then on. The value can be changed by calling the
  * `setAuthenticated()` method in the context.
  */
-export const AuthProvider = ({ children, authenticated }) => {
-  const [isAuthenticated, setAuthenticated] = React.useState(authenticated);
+export const AuthProvider = ({
+  children,
+  authenticated
+}: {
+  children: ReactNode;
+  authenticated: boolean;
+}): ReactElement => {
+  const [isAuthenticated, setAuthenticated] = React.useState<boolean>(
+    authenticated
+  );
   return (
     <AuthContext.Provider
       value={{
@@ -25,7 +39,7 @@ export const AuthProvider = ({ children, authenticated }) => {
   );
 };
 
-export function useAuth() {
+export function useAuth(): AuthContext {
   const context = React.useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
@@ -33,7 +47,7 @@ export function useAuth() {
   return context;
 }
 
-export function useIsAuthenticated() {
+export function useIsAuthenticated(): boolean {
   const context = useAuth();
   return context.isAuthenticated;
 }
