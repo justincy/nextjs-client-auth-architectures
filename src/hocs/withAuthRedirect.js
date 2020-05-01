@@ -6,12 +6,8 @@ function DefaultLoadingFallback() {
 }
 
 /**
- * Support conditional redirecting, both server-side and client-side.
- *
- * Client-side, we can use next/router. But that doesn't exist on the server.
- * So on the server we must do an HTTP redirect. This component handles
- * the logic to detect whether on the server and client and redirect
- * appropriately.
+ * Support client-side conditional redirecting based on the user's
+ * authenticated state.
  *
  * @param WrappedComponent The component that this functionality
  * will be added to.
