@@ -1,14 +1,28 @@
+import Link from 'next/link';
 import { useIsAuthenticated } from '../providers/Auth';
 
 export default function Header() {
   const isAuthenticated = useIsAuthenticated();
   return (
     <header>
-      <a href="/">Home</a> |{' '}
+      <Link href="/">
+        <a>Home</a>
+      </Link>{' '}
+      |{' '}
       {isAuthenticated ? (
-        <a href="/logout">Logout</a>
+        <>
+          <Link href="/profile">
+            <a>Profile</a>
+          </Link>{' '}
+          |{' '}
+          <Link href="/logout">
+            <a>Logout</a>
+          </Link>
+        </>
       ) : (
-        <a href="/login">Login</a>
+        <Link href="/login">
+          <a>Login</a>
+        </Link>
       )}
       <hr />
     </header>

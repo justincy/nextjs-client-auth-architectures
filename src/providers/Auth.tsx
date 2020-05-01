@@ -2,35 +2,37 @@ import React, { ReactNode, ReactElement } from 'react';
 
 type AuthContext = {
   isAuthenticated: boolean;
+  isLoading: boolean;
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AuthContext = React.createContext<AuthContext>({
   isAuthenticated: false,
+  isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setAuthenticated: () => {}
 });
 
-/**
- * The initial value of `isAuthenticated` comes from the `authenticated`
- * prop which gets set by _app. We store that value in state and ignore
- * the prop from then on. The value can be changed by calling the
- * `setAuthenticated()` method in the context.
- */
 export const AuthProvider = ({
-  children,
-  authenticated
+  children
 }: {
   children: ReactNode;
-  authenticated: boolean;
 }): ReactElement => {
-  const [isAuthenticated, setAuthenticated] = React.useState<boolean>(
-    authenticated
-  );
+  const [isAuthenticated, setAuthenticated] = React.useState<boolean>(false);
+  const [isLoading, setLoading] = React.useState<boolean>(true);
+  React.useEffect(() => {
+    const initializeAuth = async (): Promise<void> => {
+      const response = await fetch('/api/checkAuth');
+      setAuthenticated(response.status === 200);
+      setLoading(false);
+    };
+    initializeAuth();
+  });
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        isLoading,
         setAuthenticated
       }}
     >

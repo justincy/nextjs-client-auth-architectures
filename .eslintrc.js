@@ -35,6 +35,11 @@ module.exports = {
     // Allows us to spread props
     'react/jsx-props-no-spreading': 'off',
 
+    // When using Link, we specify the href on Link instead of a.
+    // Link will add it to a so we leave it off. This disables
+    // warnings about a not having an href in JSX.
+    'jsx-a11y/anchor-is-valid': 'off',
+
     // Annoying
     'import/extensions': 'off',
 

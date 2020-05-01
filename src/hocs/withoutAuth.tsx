@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
-import { useIsAuthenticated } from '../providers/Auth';
-import withConditionalRedirect from './withConditionalRedirect';
+import withAuthRedirect from './withAuthRedirect';
 
 /**
  * Require the user to be unauthenticated in order to render the component.
@@ -10,14 +9,9 @@ export default function withoutAuth<P>(
   WrappedComponent: NextPage<P>,
   location = '/profile'
 ): NextPage<P> {
-  return withConditionalRedirect({
+  return withAuthRedirect({
     WrappedComponent,
     location,
-    clientCondition: function withoutAuthClientCondition() {
-      return useIsAuthenticated();
-    },
-    serverCondition: function withoutAuthServerCondition(ctx) {
-      return !!ctx.req?.cookies.session;
-    }
+    expectedAuth: false
   });
 }
