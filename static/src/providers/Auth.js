@@ -2,7 +2,7 @@ import React from 'react';
 
 const AuthContext = React.createContext({
   isAuthenticated: false,
-  setAuthenticated: () => {}
+  setAuthenticated: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
@@ -15,13 +15,13 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     };
     initializeAuth();
-  }, [isAuthenticated]);
+  }, []);
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
         isLoading,
-        setAuthenticated
+        setAuthenticated,
       }}
     >
       {children}
